@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Get CRUD</title>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                border: 1px solid black;
+                width: 100%;
+            }
+            .button {
+                background-color: #e95b5b;
+                border: none;
+                color: white;
+                padding: 10px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                cursor: pointer;
+            }
+            td,
+            th {
+                text-align: left;
+                border-collapse: collapse;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #31b948;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>HTML Table</h2>
+
+        <table>
+            <tr>
+                <th>Email</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Address</th>
+                <th colspan="2">Action</th>
+            </tr>
+            <% for(let i=0; i < dataTable.length; i++) { %>
+            <tr>
+                <td><%= dataTable[i].email %></td>
+                <td><%= dataTable[i].firstName %></td>
+                <td><%= dataTable[i].lastName %></td>
+                <td><%= dataTable[i].address %></td>
+                <td>
+                    <a class="button" href="/edit-crud?id=<%=dataTable[i].id %>"
+                        >Edit</a
+                    >
+                </td>
+                <td>
+                    <a
+                        class="button"
+                        href="/delete-crud?id=<%=dataTable[i].id %>"
+                        >Delete</a
+                    >
+                </td>
+            </tr>
+            <% } %>
+        </table>
+    </body>
+</html>
