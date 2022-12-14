@@ -24,7 +24,13 @@ let handleUserLogin = (email, password) => {
                     where: {
                         email: email,
                     },
-                    attributes: ["email", "roleId", "password"],
+                    attributes: [
+                        "email",
+                        "roleId",
+                        "password",
+                        "firstName",
+                        "lastName",
+                    ],
                     raw: true,
                 });
                 if (user) {
@@ -126,8 +132,9 @@ let createNewUser = (data) => {
                     lastName: data.lastName,
                     address: data.address,
                     phonenumber: data.phonenumber,
-                    gender: data.gender === "1" ? true : false,
-                    roleId: data.roleId,
+                    gender: data.gender,
+                    roleId: data.role,
+                    positionId: data.position,
                 });
                 resolve({
                     errCode: 0,
@@ -212,10 +219,36 @@ let updateUserData = (data) => {
     });
 };
 
+let getAllCodeService = (typeInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!typeInput) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing require parameters",
+                });
+            } else {
+                let res = {};
+                let allCode = await db.Allcode.findAll({
+                    where: {
+                        type: typeInput,
+                    },
+                });
+                res.errCode = 0;
+                res.data = allCode;
+                resolve(res);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
     createNewUser: createNewUser,
     deleteUser: deleteUser,
     updateUserData: updateUserData,
+    getAllCodeService: getAllCodeService,
 };
