@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
     class Allcode extends Model {
         /**
@@ -9,11 +10,20 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            Allcode.hasMany(models.User, {
+                foreignKey: "positionId",
+                as: "positionData",
+            });
+            Allcode.hasMany(models.User, {
+                foreignKey: "gender",
+                as: "genderData",
+            });
+            // allcode thuoc nhieu cho
         }
     }
     Allcode.init(
         {
-            key: DataTypes.STRING,
+            keyMap: DataTypes.STRING,
             type: DataTypes.STRING,
             valueEn: DataTypes.STRING,
             valueVi: DataTypes.STRING,
